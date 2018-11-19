@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<!--content -->
+    <LinearLayout
+        android:layout_margin="@dimen/margin"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <!--LOGO-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo"
+
+            />
+
+        <!--USER-->
+        <EditText
+            android:inputType="textEmailAddress"
+            android:hint="@string/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+         />
+
+        <!--Password-->
+        <EditText
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <!--Login-->
+        <Button
+            android:text="@string/login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!--New register-->
+        <TextView
+            android:textStyle="italic"
+            android:layout_marginTop="10dp"
+            android:textSize="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="New Register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>
