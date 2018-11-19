@@ -44,9 +44,11 @@
 
         <!--New register-->
         <TextView
+            android:clickable="true"
+            android:id="@+id/textViewRegister"
             android:textStyle="italic"
             android:layout_marginTop="10dp"
-            android:textSize="10dp"
+            android:textSize="20dp"
             android:layout_gravity="center_horizontal"
             android:text="New Register"
             android:layout_width="wrap_content"
