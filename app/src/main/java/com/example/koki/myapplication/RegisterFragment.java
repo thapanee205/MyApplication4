@@ -27,6 +27,8 @@ public class RegisterFragment extends Fragment {
 
     private Uri uri;
     private ImageView imageView;
+    private boolean aBoolean=true;
+
 
 
     @Override
@@ -41,14 +43,29 @@ public class RegisterFragment extends Fragment {
 
     }//Main Method
 
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
         if (item.getItemId()==R.id.itemUpload) {
+            cheackData();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void cheackData() {
+
+        MyAlert  myAlert =new MyAlert(getActivity());
+
+        if (aBoolean) {
+            myAlert.normalDialog(getString(R.string.title_have_space),getString(R.string.messege_have_space));
+        }
+
     }
 
     @Override
@@ -80,6 +97,8 @@ public class RegisterFragment extends Fragment {
         if (resultCode==getActivity().RESULT_OK) {
 
             uri=data.getData();
+            aBoolean=false;
+
             try {
                 Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
                 Bitmap  bitmap1=Bitmap.createScaledBitmap(bitmap,800,600,false);
