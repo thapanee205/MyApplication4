@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -101,7 +102,7 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    private void uploadToFirebase(String nameString, String emailString, String passwordString) {
+    private void uploadToFirebase(final String nameString, String emailString, String passwordString) {
         final ProgressDialog progressDialog= new ProgressDialog(getActivity());
         progressDialog.setTitle("Please Wait...");
         progressDialog.show();
@@ -114,11 +115,18 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                // register email
+
                 Toast.makeText(getActivity(),"Success Upload",Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
+                // register email
+                String urlAvata =findURLavata(nameString);
+                Log.wtf("20novV1","urlAvata==> "+urlAvata);
+             //   Log.d("20novV1","urlAvata==> "+urlAvata);
 
-            }// ถ้าโยนสำเร็จ
+
+
+            }// ถ้าโยนสำเร็จ   //on seccess
+
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
@@ -130,6 +138,26 @@ public class RegisterFragment extends Fragment {
 
 
     }// Upload
+
+    private String findURLavata(String nameString) {
+        final String result=null;
+       // result="Hello "+nameString;
+        FirebaseStorage firebaseStorage=FirebaseStorage.getInstance();
+        StorageReference storageReference=firebaseStorage.getReference();
+
+        final String []  strings= new String[1];
+        storageReference.child("Avata").child(nameString)
+                .getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        strings [0]=uri.toString();
+                       return;
+                    }
+                });
+
+        return result;
+    }
 
     private boolean checkSpace(String nameString, String emailString, String passwordString, String rePasswordString) {
 
