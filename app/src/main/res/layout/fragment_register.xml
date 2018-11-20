@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".RegisterFragment">
 
-
-    <!--Toobar -->
+    <!--Toolbar-->
     <android.support.v7.widget.Toolbar
         android:id="@+id/toobarRegister"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:background="@color/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-    </android.support.v7.widget.Toolbar>
-
-    <!--Content -->
-    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <!--Content-->
+    <LinearLayout
         android:layout_margin="@dimen/margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-
-        <!--Avata-PIZ->
+        <!--Avata-->
         <ImageView
-            android:id="@+id/imageViewAvarta"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:id="@+id/imageViewAvata"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/avarta" />
+            android:src="@drawable/avarta"
+            android:layout_width="wrap_content"
+            android:layout_height="150dp" />
 
-        <!--name-->
+        <!--Name-->
         <EditText
             android:inputType="text"
             android:hint="Name :"
@@ -48,20 +44,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--password-->
+        <!--Password-->
         <EditText
             android:inputType="textPassword"
             android:hint="@string/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <!--Repassword-->
         <EditText
             android:inputType="textPassword"
-            android:hint="Re-Password"
+            android:hint="Re-Password :"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
     </LinearLayout>
+
 
 
 </LinearLayout>
