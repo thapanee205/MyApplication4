@@ -44,6 +44,7 @@
 
         <!--New register-->
         <TextView
+
             android:clickable="true"
             android:id="@+id/textViewRegister"
             android:textStyle="italic"
