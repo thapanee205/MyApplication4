@@ -15,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -62,10 +63,51 @@ public class RegisterFragment extends Fragment {
 
         MyAlert  myAlert =new MyAlert(getActivity());
 
+       // Get Value From Editext to String
+        EditText nameEditText=getView().findViewById(R.id.edtName);
+        EditText emailEditText=getView().findViewById(R.id.edtEmail);
+        EditText passwordEditText=getView().findViewById(R.id.edtPassword);
+        EditText rePasswordEditText=getView().findViewById(R.id.edtRePassword);
+
+        String nameString = nameEditText.getText().toString().trim();
+        String emailString = emailEditText.getText().toString().trim();
+        String passwordString= passwordEditText.getText().toString().trim();
+        String rePasswordString = rePasswordEditText.getText().toString().trim();
+
+
         if (aBoolean) {
+            myAlert.normalDialog("No Avata","Please Choose Image for Avata" );
+        } else if (checkSpace(nameString, emailString, passwordString, rePasswordString)) {
             myAlert.normalDialog(getString(R.string.title_have_space),getString(R.string.messege_have_space));
+
+        } else if (passwordString.equals(rePasswordString)) {
+            //password math
+            uploadToFirebase(nameString, emailString,passwordString);
+
+
+        } else {
+            myAlert.normalDialog("Password Not Math","Please Type Password Again");
         }
 
+
+    }
+
+    private void uploadToFirebase(String nameString, String emailString, String passwordString) {
+
+    }
+
+    private boolean checkSpace(String nameString, String emailString, String passwordString, String rePasswordString) {
+
+       boolean result = false;
+
+       if (nameString.isEmpty() || emailString.isEmpty() || rePasswordString.isEmpty() || passwordString.isEmpty())
+       {
+          result=true;
+       }
+
+
+
+        return result;
     }
 
     @Override
