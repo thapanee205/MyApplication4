@@ -9,5 +9,7 @@
     <string name="register">สมัครสมาชิก</string>
     <string name="messege_have_space"> Please Fill All Blank</string>
     <string name="title_have_space"> Have Space</string>
+    <string name="open"> Open Drawer </string>
+    <string name="close"> Close Drawer </string>
 
 </resources>
