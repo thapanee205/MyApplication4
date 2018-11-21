@@ -156,9 +156,7 @@ public class RegisterFragment extends Fragment {
                      MyAlert myAlert=new MyAlert(getActivity());
                      myAlert.normalDialog("Cannot Register ", task.getException().toString());
                  }
-
-
-
+                 
 
 
             }//complete register
