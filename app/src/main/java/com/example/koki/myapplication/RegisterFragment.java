@@ -28,7 +28,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -115,17 +118,14 @@ public class RegisterFragment extends Fragment {
                 Toast.makeText(getActivity(), "Success Upload", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
-                //    Find Path URL
+//                Find Path URL
                 storageReference1.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Log.d("21novV1","PathURL ==>"+uri.toString() ) ;
-                        registerFirbase(nameString,emailString,passwordString,uri.toString());
+                        Log.d("21novV1", "PathURL ==> " + uri.toString());
+                        registerFirebase(nameString, emailString, passwordString, uri.toString());
                     }
                 });
-
-
-
 
 
             }   // onSuccess
@@ -144,27 +144,69 @@ public class RegisterFragment extends Fragment {
 
     }   // upload
 
-    private void registerFirbase(String nameString, String emailString, String passwordString, String pathUrlString) {
+    private void registerFirebase(final String nameString,
+                                  String emailString,
+                                  String passwordString,
+                                  final String pathUrlString) {
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-        firebaseAuth.createUserWithEmailAndPassword(emailString,passwordString).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                 if (task.isSuccessful()) {
+        firebaseAuth.createUserWithEmailAndPassword(emailString, passwordString)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if (task.isSuccessful()) {
+
+                            FirebaseAuth firebaseAuth1 = FirebaseAuth.getInstance();
+                            final FirebaseUser firebaseUser = firebaseAuth1.getCurrentUser();
+                            UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest
+                                    .Builder().setDisplayName(nameString).build();
+                            firebaseUser.updateProfile(userProfileChangeRequest)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Log.d("21novV1", "DisplayName ==> " + firebaseUser.getDisplayName());
+                                            Log.d("21novV1", "userUID ==> " + firebaseUser.getUid());
+                                            createDatabase(firebaseUser.getUid(), pathUrlString, 17.398643, 102.793634, nameString);
+                                        }
+                                    });
+
+                        } else {
+                            MyAlert myAlert = new MyAlert(getActivity());
+                            myAlert.normalDialog("Cannot Register", task.getException().toString());
+                        }
+
+                    }   // Complete
+                });
 
 
-                 }else {
-                     MyAlert myAlert=new MyAlert(getActivity());
-                     myAlert.normalDialog("Cannot Register ", task.getException().toString());
-                 }
-                 
+
+    }   // register
+
+    private void createDatabase(String uidString,
+                                String pathUrlString,
+                                double latDouble,
+                                double lngDouble,
+                                String nameString) {
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference()
+                .child("User").child(uidString);
+
+        DatabaseModel databaseModel = new DatabaseModel(uidString, pathUrlString, nameString, latDouble, lngDouble);
+
+        databaseReference.setValue(databaseModel)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Intent intent = new Intent(getActivity(), ServiceActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+                    }
+                });
 
 
-            }//complete register
-        });
-
-
-
-    }//register
+    }   // createDatabase
 
 
     private boolean checkSpace(String nameString,
