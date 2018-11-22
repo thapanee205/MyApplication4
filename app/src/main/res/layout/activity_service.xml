@@ -26,23 +26,27 @@ tools:context=".ServiceActivity">
     <!--Drawer-->
 <LinearLayout
 
+    android:layout_gravity="start"
     android:background="#ffffff"
     android:orientation="vertical"
     android:layout_width="320dp"
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_gravity="Start"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <ImageView
+
             android:scaleType="fitXY"
             android:src="@drawable/bg"
             android:layout_width="match_parent"
             android:layout_height="150dp" />
+
         <TextView
-            android:layout_alignRight="true"
+            android:layout_marginRight="30dp"
+            android:layout_alignParentRight="true"
             android:textStyle="bold"
             android:textSize="@dimen/h1"
             android:text="Drawer Menu"
